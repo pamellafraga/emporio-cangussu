@@ -12,7 +12,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { formatPrice, type Wine, wines } from '@/data/wines'
 import { whatsappLink } from '@/data/social'
@@ -46,36 +45,13 @@ export function Catalog({ selected, onSelect }: CatalogProps) {
 
       gsap.from('[data-catalog-intro]', {
         opacity: 0,
-        y: 40,
-        duration: 0.9,
-        stagger: 0.1,
+        y: 28,
+        duration: 0.8,
+        stagger: 0.08,
         ease: 'power3.out',
+        clearProps: 'all',
         scrollTrigger: {
           trigger: root.current,
-          start: 'top 80%',
-          once: true,
-        },
-      })
-
-      gsap.from('[data-catalog-list]', {
-        opacity: 0,
-        x: -32,
-        duration: 0.9,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '[data-catalog-list]',
-          start: 'top 85%',
-          once: true,
-        },
-      })
-
-      gsap.from('[data-catalog-stage]', {
-        opacity: 0,
-        x: 36,
-        duration: 1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '[data-catalog-stage]',
           start: 'top 85%',
           once: true,
         },
@@ -85,9 +61,13 @@ export function Catalog({ selected, onSelect }: CatalogProps) {
   )
 
   return (
-    <section ref={root} id="catalogo" className="relative px-4 py-12 sm:px-6 sm:py-14 lg:px-10">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-10 max-w-2xl">
+    <section
+      ref={root}
+      id="catalogo"
+      className="relative w-full max-w-full overflow-x-clip px-4 py-10 sm:px-6 sm:py-14 lg:px-10"
+    >
+      <div className="mx-auto w-full min-w-0 max-w-6xl">
+        <div className="mb-8 max-w-2xl sm:mb-10">
           <p
             data-catalog-intro
             className="mb-2 text-sm font-medium uppercase tracking-[0.28em] text-wine"
@@ -96,95 +76,62 @@ export function Catalog({ selected, onSelect }: CatalogProps) {
           </p>
           <h2
             data-catalog-intro
-            className="font-display text-4xl font-semibold text-ink sm:text-5xl"
+            className="font-display text-3xl font-semibold break-words text-ink sm:text-4xl md:text-5xl"
           >
             Selecione um vinho e gire a garrafa
           </h2>
-          <p data-catalog-intro className="mt-3 text-base text-muted-foreground sm:text-lg">
+          <p data-catalog-intro className="mt-3 text-sm text-muted-foreground sm:text-base md:text-lg">
             Visualização 3D com materiais de vidro físico — cada rótulo muda a cápsula, o líquido e
             o tom da etiqueta.
           </p>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-start">
-          <ScrollArea
-            data-catalog-list
-            className="h-[32rem] rounded-lg border border-border bg-card/70 pr-3 backdrop-blur-sm"
-          >
-            <div className="space-y-3 p-3">
-              {wines.map((wine) => {
-                const active = wine.id === selected.id
-                return (
-                  <button
-                    key={wine.id}
-                    type="button"
-                    onClick={() => onSelect(wine)}
-                    className={cn(
-                      'w-full rounded-lg border px-4 py-4 text-left transition-all',
-                      active
-                        ? 'border-wine bg-cream shadow-md shadow-wine/10'
-                        : 'border-transparent bg-transparent hover:border-olive/30 hover:bg-cream/50',
-                    )}
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <p className="font-display text-xl font-semibold text-ink">{wine.name}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {wine.producer} · {wine.vintage}
-                        </p>
-                      </div>
-                      <Badge variant={active ? 'default' : 'outline'}>{typeLabel[wine.type]}</Badge>
-                    </div>
-                    <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">
-                      {wine.description}
-                    </p>
-                    <p className="mt-3 font-medium text-forest">{formatPrice(wine.price)}</p>
-                  </button>
-                )
-              })}
-            </div>
-          </ScrollArea>
-
-          <div data-catalog-stage className="space-y-5">
-            <div className="overflow-hidden rounded-lg border border-border bg-forest-deep shadow-xl shadow-forest/20">
+        <div className="grid w-full min-w-0 grid-cols-1 gap-6 lg:grid-cols-2 lg:items-start lg:gap-8">
+          {/* 3D primeiro no mobile para não ficar cortado fora da vista */}
+          <div data-catalog-stage className="order-1 min-w-0 space-y-4 lg:order-2">
+            <div className="w-full min-w-0 overflow-hidden rounded-lg border border-border bg-forest-deep shadow-xl shadow-forest/20">
               <Suspense
                 fallback={
-                  <div className="flex h-[22rem] items-center justify-center text-cream/70 sm:h-[28rem]">
+                  <div className="flex aspect-[4/5] w-full items-center justify-center text-cream/70 sm:aspect-auto sm:h-[28rem]">
                     Carregando garrafa 3D…
                   </div>
                 }
               >
                 <BottleScene
                   wine={selected}
-                  className="h-[22rem] w-full sm:h-[28rem]"
+                  className="aspect-[4/5] w-full max-w-full sm:aspect-auto sm:h-[28rem]"
                   interactive
                 />
               </Suspense>
             </div>
 
-            <Card className="border-olive/25 bg-card/90 backdrop-blur-sm">
-              <CardHeader>
+            <Card className="w-full min-w-0 overflow-hidden border-olive/25 bg-card/90 backdrop-blur-sm">
+              <CardHeader className="space-y-3 p-4 sm:p-5">
                 <div className="flex flex-wrap items-center gap-2">
                   <Badge variant="secondary">{typeLabel[selected.type]}</Badge>
-                  <Badge variant="ochre">{selected.grape}</Badge>
+                  <Badge variant="ochre" className="max-w-full truncate">
+                    {selected.grape}
+                  </Badge>
                 </div>
-                <CardTitle className="mt-2">{selected.name}</CardTitle>
-                <CardDescription className="text-base">{selected.description}</CardDescription>
+                <CardTitle className="text-xl break-words sm:text-2xl">{selected.name}</CardTitle>
+                <CardDescription className="text-sm break-words sm:text-base">
+                  {selected.description}
+                </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid gap-3 text-sm sm:grid-cols-3">
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <MapPin className="size-4 text-wine" />
-                    <span>
+              <CardContent className="space-y-4 p-4 pt-0 sm:p-5 sm:pt-0">
+                <div className="grid gap-3 text-sm">
+                  <div className="flex min-w-0 items-start gap-2 text-muted-foreground">
+                    <MapPin className="mt-0.5 size-4 shrink-0 text-wine" />
+                    <span className="break-words">
                       {selected.region}, {selected.country}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <Grape className="size-4 text-forest" />
-                    <span>{selected.grape}</span>
+                  <div className="flex min-w-0 items-start gap-2 text-muted-foreground">
+                    <Grape className="mt-0.5 size-4 shrink-0 text-forest" />
+                    <span className="break-words">{selected.grape}</span>
                   </div>
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <WineIcon className="size-4 text-ochre" />
+                  <div className="flex min-w-0 items-start gap-2 text-muted-foreground">
+                    <WineIcon className="mt-0.5 size-4 shrink-0 text-ochre" />
                     <span>Safra {selected.vintage}</span>
                   </div>
                 </div>
@@ -204,11 +151,11 @@ export function Catalog({ selected, onSelect }: CatalogProps) {
                   </div>
                 </div>
 
-                <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-                  <p className="font-display text-3xl font-semibold text-ink">
+                <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+                  <p className="font-display text-2xl font-semibold text-ink sm:text-3xl">
                     {formatPrice(selected.price)}
                   </p>
-                  <Button asChild size="lg">
+                  <Button asChild size="lg" className="w-full shrink-0 sm:w-auto">
                     <a
                       href={whatsappLink(
                         `Olá! Tenho interesse no ${selected.name} (${selected.vintage}).`,
@@ -222,6 +169,46 @@ export function Catalog({ selected, onSelect }: CatalogProps) {
                 </div>
               </CardContent>
             </Card>
+          </div>
+
+          <div
+            data-catalog-list
+            className="order-2 w-full min-w-0 space-y-3 lg:order-1 lg:max-h-[40rem] lg:overflow-y-auto lg:rounded-lg lg:border lg:border-border lg:bg-card/70 lg:p-3 lg:pr-2 lg:backdrop-blur-sm"
+          >
+            {wines.map((wine) => {
+              const active = wine.id === selected.id
+              return (
+                <button
+                  key={wine.id}
+                  type="button"
+                  onClick={() => onSelect(wine)}
+                  className={cn(
+                    'w-full min-w-0 rounded-lg border px-3 py-3 text-left transition-all sm:px-4 sm:py-4',
+                    active
+                      ? 'border-wine bg-cream shadow-md shadow-wine/10'
+                      : 'border-olive/20 bg-card/60 hover:border-olive/40 hover:bg-cream/50',
+                  )}
+                >
+                  <div className="flex min-w-0 items-start justify-between gap-2">
+                    <div className="min-w-0 flex-1">
+                      <p className="font-display text-lg font-semibold break-words text-ink sm:text-xl">
+                        {wine.name}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        {wine.producer} · {wine.vintage}
+                      </p>
+                    </div>
+                    <Badge variant={active ? 'default' : 'outline'} className="shrink-0">
+                      {typeLabel[wine.type]}
+                    </Badge>
+                  </div>
+                  <p className="mt-2 line-clamp-2 text-sm break-words text-muted-foreground">
+                    {wine.description}
+                  </p>
+                  <p className="mt-3 font-medium text-forest">{formatPrice(wine.price)}</p>
+                </button>
+              )
+            })}
           </div>
         </div>
       </div>

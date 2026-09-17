@@ -107,7 +107,7 @@ function LoaderFallback() {
 
 export function BottleScene({ wine, className, interactive = true }: BottleSceneProps) {
   return (
-    <div className={`relative overflow-hidden ${className ?? ''}`}>
+    <div className={`relative w-full max-w-full overflow-hidden ${className ?? ''}`}>
       <img
         src="/scene-backdrop-hq.png"
         alt=""
@@ -119,9 +119,9 @@ export function BottleScene({ wine, className, interactive = true }: BottleScene
         aria-hidden
       />
       <Canvas
-        className="relative z-10 h-full w-full touch-none"
+        className="relative z-10 !h-full !w-full touch-none"
         shadows
-        dpr={[1, 2]}
+        dpr={[1, 1.5]}
         camera={{ position: [0, 0.35, 4.2], fov: 36 }}
         gl={{
           antialias: true,
@@ -129,7 +129,8 @@ export function BottleScene({ wine, className, interactive = true }: BottleScene
           powerPreference: 'high-performance',
           toneMappingExposure: 1.05,
         }}
-        style={{ background: 'transparent' }}
+        style={{ background: 'transparent', width: '100%', height: '100%', display: 'block' }}
+        resize={{ debounce: 0, scroll: false }}
       >
         <Suspense fallback={<LoaderFallback />}>
           <SceneContent wine={wine} interactive={interactive} />

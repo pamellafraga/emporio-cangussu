@@ -76,13 +76,13 @@ export function Hero() {
   )
 
   return (
-    <header ref={root} className="relative h-dvh overflow-hidden">
-      <div className="relative h-full overflow-hidden">
+    <header ref={root} className="relative w-full max-w-full h-dvh overflow-hidden">
+      <div className="relative h-full w-full max-w-full overflow-hidden">
         <img
           data-hero-bg
           src="/hero-cellar-hq.png"
           alt=""
-          className="absolute inset-0 h-full w-full scale-105 object-cover object-center brightness-[1.08] contrast-[1.05] will-change-transform"
+          className="absolute inset-0 h-full w-full object-cover object-center brightness-[1.08] contrast-[1.05] will-change-transform sm:scale-105"
           decoding="async"
           fetchPriority="high"
         />
@@ -103,15 +103,15 @@ export function Hero() {
 
         <nav
           data-hero-nav
-          className="relative z-20 flex flex-wrap items-center justify-between gap-3 px-5 py-5 sm:px-8 lg:px-12"
+          className="relative z-20 flex w-full max-w-full flex-wrap items-center justify-between gap-3 px-4 py-4 sm:px-8 sm:py-5 lg:px-12"
         >
-          <a href="#topo" className="flex items-center gap-3">
+          <a href="#topo" className="flex min-w-0 items-center gap-2 sm:gap-3">
             <img
               src="/logo-cangussu.jpg"
               alt=""
-              className="size-10 rounded-full object-cover ring-1 ring-cream/35"
+              className="size-9 shrink-0 rounded-full object-cover ring-1 ring-cream/35 sm:size-10"
             />
-            <span className="font-display text-lg font-semibold tracking-wide text-cream drop-shadow-md">
+            <span className="font-display text-base font-semibold tracking-wide text-cream drop-shadow-md sm:text-lg">
               Empório Cangussu
             </span>
           </a>
@@ -125,30 +125,30 @@ export function Hero() {
 
         <div
           data-hero-content
-          className="relative z-10 flex h-[calc(100dvh-5.5rem)] max-w-3xl flex-col justify-end px-5 pb-12 pt-10 will-change-transform sm:px-8 lg:px-12"
+          className="relative z-10 flex h-[calc(100dvh-5rem)] w-full max-w-3xl flex-col justify-end px-4 pb-10 pt-8 will-change-transform sm:px-8 sm:pb-12 sm:pt-10 lg:px-12"
         >
           <p
             data-hero-reveal
-            className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-ochre drop-shadow"
+            className="mb-3 text-xs font-medium uppercase tracking-[0.28em] text-ochre drop-shadow sm:mb-4 sm:text-sm sm:tracking-[0.35em]"
           >
             Vinhos com alma tropical
           </p>
           <h1
             data-hero-reveal
-            className="font-display text-5xl leading-[0.95] font-bold text-cream drop-shadow-lg sm:text-6xl lg:text-8xl"
+            className="font-display text-4xl leading-[0.95] font-bold text-cream drop-shadow-lg sm:text-6xl lg:text-8xl"
           >
             Empório
             <span className="mt-1 block text-ochre">Cangussu</span>
           </h1>
           <p
             data-hero-reveal
-            className="mt-6 max-w-md text-base leading-relaxed text-cream drop-shadow sm:text-lg"
+            className="mt-4 max-w-md text-sm leading-relaxed text-cream drop-shadow sm:mt-6 sm:text-lg"
           >
             Catálogo artesanal de vinhos selecionados — da mata ao cálice, com a força da onça e o
             sabor da terra.
           </p>
-          <div data-hero-reveal className="mt-8 flex flex-wrap items-center gap-3">
-            <Button asChild size="lg" className="bg-wine hover:bg-wine-deep">
+          <div data-hero-reveal className="mt-6 flex w-full max-w-full flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center">
+            <Button asChild size="lg" className="w-full bg-wine hover:bg-wine-deep sm:w-auto">
               <a href="#catalogo">
                 Explorar catálogo
                 <ArrowDown className="size-4" />
@@ -158,12 +158,12 @@ export function Hero() {
               asChild
               size="lg"
               variant="outline"
-              className="border-cream/50 bg-forest-deep/25 text-cream backdrop-blur-sm hover:bg-cream/15"
+              className="w-full border-cream/50 bg-forest-deep/25 text-cream backdrop-blur-sm hover:bg-cream/15 sm:w-auto"
             >
               <a href="#sobre">Nossa essência</a>
             </Button>
           </div>
-          <div data-hero-reveal className="mt-6 sm:hidden">
+          <div data-hero-reveal className="mt-5 sm:hidden">
             <SocialLinks />
           </div>
         </div>

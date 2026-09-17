@@ -8,7 +8,9 @@ gsap.registerPlugin(ScrollTrigger)
 export function useSmoothScroll() {
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) return
+    const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches
+    // Lenis costuma atrapalhar scroll/layout no mobile — manter só no desktop
+    if (prefersReduced || isCoarsePointer) return
 
     const lenis = new Lenis({
       duration: 1.15,
@@ -27,7 +29,6 @@ export function useSmoothScroll() {
     return () => {
       gsap.ticker.remove(ticker)
       lenis.destroy()
-      // Não matar todos os ScrollTriggers — isso zerava as animações dos cards
     }
   }, [])
 }

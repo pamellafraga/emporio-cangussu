@@ -43,11 +43,15 @@ export function About() {
   )
 
   return (
-    <section ref={root} id="sobre" className="relative px-4 py-16 sm:px-6 sm:py-20 lg:px-10">
-      <div className="mx-auto max-w-6xl">
+    <section
+      ref={root}
+      id="sobre"
+      className="relative w-full max-w-full overflow-x-clip px-4 py-16 sm:px-6 sm:py-20 lg:px-10"
+    >
+      <div className="mx-auto w-full min-w-0 max-w-6xl">
         <div
           data-about-media
-          className="grid overflow-hidden rounded-sm shadow-2xl shadow-forest/25 ring-1 ring-olive/20 lg:grid-cols-[1.15fr_0.85fr]"
+          className="grid w-full min-w-0 overflow-hidden rounded-sm shadow-2xl shadow-forest/25 ring-1 ring-olive/20 lg:grid-cols-[1.15fr_0.85fr]"
         >
           <img
             src="/about-vineyard.png"
@@ -107,13 +111,13 @@ export function About() {
 
 export function Footer() {
   return (
-    <footer className="border-t border-olive/25 bg-forest-deep px-4 py-10 text-cream sm:px-6 lg:px-10">
-      <div className="mx-auto grid max-w-6xl gap-4 sm:grid-cols-3 sm:items-center">
+    <footer className="w-full max-w-full overflow-x-clip border-t border-olive/25 bg-forest-deep px-4 py-10 text-cream sm:px-6 lg:px-10">
+      <div className="mx-auto grid w-full min-w-0 max-w-6xl gap-6 text-center sm:grid-cols-3 sm:items-center sm:gap-4 sm:text-left">
         <div>
           <p className="font-display text-xl font-semibold sm:text-2xl">Empório Cangussu</p>
         </div>
 
-        <p className="text-center text-sm text-cream/60">
+        <p className="text-sm text-cream/60 sm:text-center">
           © {new Date().getFullYear()} Empório Cangussu — desenvolvido por{' '}
           <a
             href="https://www.xpresssolutions.com.br/"

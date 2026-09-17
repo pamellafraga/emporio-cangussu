@@ -42,21 +42,44 @@
 
   html {
     scroll-behavior: smooth;
+    width: 100%;
+    overflow-x: clip;
   }
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
     background-image:
       radial-gradient(ellipse 120% 80% at 10% -10%, color-mix(in srgb, var(--color-sage) 28%, transparent), transparent 55%),
       radial-gradient(ellipse 90% 70% at 100% 0%, color-mix(in srgb, var(--color-wine) 14%, transparent), transparent 50%),
       linear-gradient(180deg, var(--color-olive) 0%, var(--color-parchment) 42%, var(--color-cream) 100%);
-    background-attachment: fixed;
+    min-height: 100dvh;
+  }
+
+  @media (min-width: 1024px) {
+    body {
+      background-attachment: fixed;
+    }
+  }
+
+  #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
     min-height: 100dvh;
   }
 
   ::selection {
     background: color-mix(in srgb, var(--color-wine) 35%, transparent);
     color: var(--color-ink);
+  }
+
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
   }
 }
 
